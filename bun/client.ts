@@ -37,7 +37,7 @@ app.get("hello/:name", async (c) => {
       );
     });
 
-    return c.json({ message: res });
+    return c.json(res as any);
   } catch (err: any) {
     return c.text(err, 500);
   }
@@ -52,4 +52,14 @@ app.onError((err, c) => {
   return c.text("Custom Error Message", 500);
 });
 
-export default app;
+// export default {
+//   port: 3000,
+//   fetch: app.fetch,
+// }
+
+const server = Bun.serve({
+  port: 3000,
+  fetch: app.fetch,
+});
+
+console.log(`Listening on localhost:${server.port}`);
